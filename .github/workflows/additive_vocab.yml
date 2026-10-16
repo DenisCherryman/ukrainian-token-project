@@ -5,6 +5,7 @@ on:
       - '.github/workflows/additive_vocab.yml'
       - 'additive_vocab.py'
       - 'tests/test_additive_vocab.py'
+      - 'requirements.txt'
   workflow_dispatch:
 permissions:
   contents: write
