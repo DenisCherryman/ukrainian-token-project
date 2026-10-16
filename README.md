@@ -1,1 +1,93 @@
-# ukrainian-token-project
+# Ukrainian Token Project (UTP) · v0.3
+
+**Відкритий дослідницький проєкт для вимірювання та потенційного покращення токенізації української мови у ШІ.**
+
+> **Статус (17 жовтня 2026): інструментарій протестований, але на реальних українських корпусах у цьому середовищі НЕ запускався.** Жодна цифра з демонстрацій не доводить зниження вартості чи кількості токенів ChatGPT. Новий токенізатор не можна без адаптації підставити в уже навчену мовну модель.
+
+## Для чого це потрібно
+
+Український текст може розбиватися на більшу кількість токенів, ніж семантично відповідний англійський. UTP дозволяє перевіряти це на паралельних текстах і досліджувати, чи можна зменшити кількість токенів за сталих умов навчання. Самого підрахунку недостатньо, щоб оцінити швидкість, якість чи ціну роботи реальної ШІ-моделі.
+
+**В UTP v0.3 є:**
+
+- контрольоване навчання SentencePiece-BPE (`utp.py`, `mixture.py`), контроль однакових словників;
+- завантажувач UD із SHA-256 та локальним збереженням оригінальних `.conllu` (`corpora.py`);
+- розподіл train/dev/test за ID **документів** із вилученням точних повторів між наборами (`prepare_ud.py`);
+- оцінка на девелоперському наборі, попередньо фіксований вибір моделі, разова фінальна оцінка (`select_ratio.py`, `final_evaluation.py`);
+- 95% bootstrap інтервали з ресемплінгом **документів** за вказаними групами (`benchmark.py`);
+- окреме вимірювання токенного співвідношення для вирівняних українсько-англійських перекладів (`parallel_gap.py`);
+- 24 автоматичні тести, CI, MIT-ліцензія **лише для нашого коду**.
+
+## Швидкий старт без інтернету (демонстрація)
+
+Потрібно Python 3.10+.
+
+```bash
+pip install -r requirements.txt pytest
+python -m pytest -q
+python mixture.py --uk examples/uk.txt --en examples/en.txt --vocab 512 --out runs/mixture_demo
+```
+
+**Демонстраційні тексти синтетичні.** Ці результати призначені тільки для перевірки коду, а не для наукових тверджень чи порівняння провайдерів.
+
+## Повноцінний бенчмарк: UD Ukrainian IU + English EWT
+
+Це **локальний некомерційний** дослідницький сценарій. Спочатку ознайомтесь із [ліцензією UD Ukrainian-IU](https://github.com/UniversalDependencies/UD_Ukrainian-IU/blob/master/LICENSE.txt) (**CC BY-NC-SA 4.0**) та [умовами UD English-EWT](https://github.com/UniversalDependencies/UD_English-EWT/blob/master/README.md): анотації CC BY-SA 4.0, права на вихідні тексти можуть належати третім особам. Код не перепоширює ці тексти.
+
+З інтернетом і після ознайомлення з ліцензіями:
+
+```bash
+python corpora.py --out data/ud_raw --accept-license
+python prepare_ud.py --source data/ud_raw --out data/ud_strict
+python mixture.py \
+  --uk data/ud_strict/uk_train.txt --en data/ud_strict/en_train.txt \
+  --uk-test data/ud_strict/uk_dev.txt --en-test data/ud_strict/en_dev.txt \
+  --vocab 1024 --train-budget-bytes 1500000 \
+  --ratios 25 50 75 100 --out runs/ud_development
+python select_ratio.py --results runs/ud_development/results.json \
+  --baseline 50 --max-en-regression-pct 10 \
+  --out runs/ud_development/decision.json
+python final_evaluation.py --decision runs/ud_development/decision.json \
+  --data data/ud_strict --out runs/ud_final
+```
+
+Ці кроки доступні також у `bash scripts/ud_workflow.sh`. **Ніколи не використовуйте фінальний `test` для вибору моделі.** `--uk-test/--en-test` у `mixture.py` означають зовнішній *evaluation* набір; в реальному експерименті туди слід подавати саме `dev`, не `test`.
+
+Окремий `prepare_ud.py` об'єднує початкові UD train/dev/test, оскільки UD Ukrainian-IU в окремих випадках розподіляє один документ між наборами. Потім він заново детерміновано розділяє документи. Невідмічені на початку файлу фрагменти відкидаються, їхня кількість фіксується у звіті. Точні повтори між різними наборами виключаються **з усіх наборів**. Перевірка близьких дублікатів, спільних авторів і тем ще не реалізована.
+
+Файли `data/ud_strict/*groups.txt` містять ID документів, які використовуються для кластерного bootstrap. `data/ud_strict/PREPARATION.json` містить SHA-256 джерел, seed, кількість документів та відкинутих рядків. Щоб зафіксувати версію корпусу, в `corpora.py` доступні `--uk-ref` та `--en-ref` з git commit SHA; типове `master` з часом змінюється.
+
+**Увага:** навіть справжній UD — невеликий корпус; це обмежений пілот, а не достатня основа для впровадження в production LLM. Результат не вважається підтвердженим без незалежних текстів інших жанрів, повторів з кількома seed і downstream-оцінок.
+
+## Окремий тест «українська проти англійської»
+
+Для чеснішої оцінки мовної різниці використовуйте **один і той самий токенізатор** на двох *вирівняних перекладах* того самого матеріалу (одне речення на рядок в кожному файлі). Це не те саме, що порівнювати непов'язані UA/EN корпуси.
+
+```bash
+pip install tiktoken
+python parallel_gap.py --uk data/parallel/uk.txt --en data/parallel/en.txt \
+  --tiktoken cl100k_base o200k_base --out runs/parallel
+```
+
+`data/parallel/` — ваші локальні файли з придатною ліцензією; в ZIP вони відсутні. `o200k_base` та `cl100k_base` — публічно доступні кодування для порівняння, **не задекларована конфігурація GPT-6**. Коли дані мають ID документів, передайте `--groups data/parallel/doc_ids.txt` для кластерного bootstrap.
+
+## Що не доведено
+
+- Ми **не** зменшили токени в GPT-6, ChatGPT або інших закритих API.
+- Немає виміряного покращення на справжніх корпусах у середовищі цього релізу.
+- Менша кількість токенів сама по собі не означає вищу якість, меншу затримку чи нижчу оплату API.
+- UD Ukrainian-IU має некомерційну ліцензію: не публікуйте зібрані корпуси, моделі з них чи комерційні артефакти без аналізу прав.
+
+## Розвиток і публікація
+
+Дивіться [`docs/RESEARCH_PLAN.md`](docs/RESEARCH_PLAN.md), [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md), [`docs/GITHUB_RELEASE.md`](docs/GITHUB_RELEASE.md) та [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+### Джерела
+
+- Maksymenko & Turuta (2025), [*Tokenization efficiency of current foundational LLMs for Ukrainian*](https://doi.org/10.3389/frai.2025.1538165).
+- [UD Ukrainian IU](https://github.com/UniversalDependencies/UD_Ukrainian-IU).
+- [UD English EWT](https://github.com/UniversalDependencies/UD_English-EWT).
+- [OpenAI tiktoken](https://github.com/openai/tiktoken).
+- [Google SentencePiece](https://github.com/google/sentencepiece).
+
+**Ліцензія коду: MIT.** Авторські та ліцензійні права на сторонні набори даних регулюються окремо.
