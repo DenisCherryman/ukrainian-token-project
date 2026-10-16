@@ -1,0 +1,246 @@
+{
+  "status": "measured_noncommercial_research",
+  "executed_at_utc": "2026-10-16T22:05:28.167361+00:00",
+  "source": {
+    "uk": {
+      "url": "https://github.com/UniversalDependencies/UD_Ukrainian-IU",
+      "license": "CC BY-NC-SA 4.0; non-commercial only",
+      "files": {
+        "train": {
+          "sha256": "f7282b32c72a2c6f304f1df13572b7dd9bff370d3da0abf726da00f6a15d1b14",
+          "url": "https://raw.githubusercontent.com/UniversalDependencies/UD_Ukrainian-IU/21f641ba6109044ce9aafd4b2cbfa20a4ac6e479/uk_iu-ud-train.conllu"
+        },
+        "dev": {
+          "sha256": "fc68644aeb86766935f1c3aa0e8baf42cc6325690803631e81e17ed8db79f436",
+          "url": "https://raw.githubusercontent.com/UniversalDependencies/UD_Ukrainian-IU/21f641ba6109044ce9aafd4b2cbfa20a4ac6e479/uk_iu-ud-dev.conllu"
+        },
+        "test": {
+          "sha256": "5538dec31c89b0cd0e5141d8a9c6bdc0099103eab3c5c6b9078ab95e67be1286",
+          "url": "https://raw.githubusercontent.com/UniversalDependencies/UD_Ukrainian-IU/21f641ba6109044ce9aafd4b2cbfa20a4ac6e479/uk_iu-ud-test.conllu"
+        }
+      }
+    },
+    "en": {
+      "url": "https://github.com/UniversalDependencies/UD_English-EWT",
+      "license": "CC BY-SA 4.0 for annotations; original source text may have other rights",
+      "files": {
+        "train": {
+          "sha256": "d68e06122a702464c613076523d56740f047e5bbe89dd90ec32737e04d952143",
+          "url": "https://raw.githubusercontent.com/UniversalDependencies/UD_English-EWT/4a4d77f599ea53cc405f85d0cec4b2f14f81d42b/en_ewt-ud-train.conllu"
+        },
+        "dev": {
+          "sha256": "39239e0a60db3ae68f4b7036189f11b6692741d10ff8240dd91f74f2760d90f8",
+          "url": "https://raw.githubusercontent.com/UniversalDependencies/UD_English-EWT/4a4d77f599ea53cc405f85d0cec4b2f14f81d42b/en_ewt-ud-dev.conllu"
+        },
+        "test": {
+          "sha256": "fa024f43dc5da3c5ac02563bc9bd0e974f46cbb1560823976a8f342a37dc494a",
+          "url": "https://raw.githubusercontent.com/UniversalDependencies/UD_English-EWT/4a4d77f599ea53cc405f85d0cec4b2f14f81d42b/en_ewt-ud-test.conllu"
+        }
+      }
+    }
+  },
+  "splits": {
+    "uk": {
+      "document_disjoint": true,
+      "counts": {
+        "train": {
+          "samples": 4931,
+          "documents": 475
+        },
+        "dev": {
+          "samples": 549,
+          "documents": 64
+        },
+        "test": {
+          "samples": 1510,
+          "documents": 65
+        }
+      },
+      "removed_duplicate_strings": 10,
+      "skipped_orphans": 0
+    },
+    "en": {
+      "document_disjoint": true,
+      "counts": {
+        "train": {
+          "samples": 11984,
+          "documents": 968
+        },
+        "dev": {
+          "samples": 1408,
+          "documents": 100
+        },
+        "test": {
+          "samples": 2013,
+          "documents": 106
+        }
+      },
+      "removed_duplicate_strings": 78,
+      "skipped_orphans": 0
+    }
+  },
+  "development_setup": {
+    "seed": 42,
+    "vocab": 1024,
+    "byte_budget_max": 500000,
+    "split_mode": "external_heldout",
+    "ratios": [
+      25,
+      50,
+      75,
+      100
+    ],
+    "uk_test_samples": 549,
+    "en_test_samples": 1408
+  },
+  "development_sweep": [
+    {
+      "uk_share_pct": 25,
+      "uk_train_bytes": 125000,
+      "en_train_bytes": 375000,
+      "uk_tokens": 30029,
+      "en_tokens": 43642,
+      "roundtrip_errors": 0
+    },
+    {
+      "uk_share_pct": 50,
+      "uk_train_bytes": 250000,
+      "en_train_bytes": 250000,
+      "uk_tokens": 26910,
+      "en_tokens": 45790,
+      "roundtrip_errors": 0
+    },
+    {
+      "uk_share_pct": 75,
+      "uk_train_bytes": 374999,
+      "en_train_bytes": 125000,
+      "uk_tokens": 24880,
+      "en_tokens": 50022,
+      "roundtrip_errors": 0
+    },
+    {
+      "uk_share_pct": 100,
+      "uk_train_bytes": 499999,
+      "en_train_bytes": 0,
+      "uk_tokens": 22876,
+      "en_tokens": 97783,
+      "roundtrip_errors": 0
+    }
+  ],
+  "frozen_selection": {
+    "baseline_share_pct": 50,
+    "selected_share_pct": 75,
+    "max_en_regression_pct": 10.0,
+    "selected_uk_reduction_pct": 7.5437,
+    "selected_en_regression_pct": 9.2422
+  },
+  "heldout_comparisons": {
+    "uk_test": {
+      "baseline": "baseline",
+      "candidate": "selected",
+      "token_reduction_pct": 7.782,
+      "bootstrap_95pct_ci": [
+        7.553,
+        8.266
+      ],
+      "bootstrap_resamples": 1000,
+      "bootstrap_unit": "document",
+      "document_groups": 65,
+      "warning": "Cluster bootstrap by supplied document groups; still subject to corpus selection bias."
+    },
+    "en_test": {
+      "baseline": "baseline",
+      "candidate": "selected",
+      "token_reduction_pct": -9.462,
+      "bootstrap_95pct_ci": [
+        -9.957,
+        -8.991
+      ],
+      "bootstrap_resamples": 1000,
+      "bootstrap_unit": "document",
+      "document_groups": 106,
+      "warning": "Cluster bootstrap by supplied document groups; still subject to corpus selection bias."
+    }
+  },
+  "heldout_metrics": {
+    "uk_test": {
+      "language": "uk",
+      "samples": 1510,
+      "metrics": {
+        "baseline": {
+          "tokens": 74194,
+          "tokens_per_word": 3.71583,
+          "roundtrip_errors": 0,
+          "vocab_size": 1024
+        },
+        "selected": {
+          "tokens": 68420,
+          "tokens_per_word": 3.42665,
+          "roundtrip_errors": 0,
+          "vocab_size": 1024
+        }
+      }
+    },
+    "en_test": {
+      "language": "en",
+      "samples": 2013,
+      "metrics": {
+        "baseline": {
+          "tokens": 76832,
+          "tokens_per_word": 2.59664,
+          "roundtrip_errors": 0,
+          "vocab_size": 1024
+        },
+        "selected": {
+          "tokens": 84102,
+          "tokens_per_word": 2.84234,
+          "roundtrip_errors": 0,
+          "vocab_size": 1024
+        }
+      }
+    }
+  },
+  "reference_encodings": {
+    "note": "Different vocabulary sizes, contextual reference only; test sets are NOT translations.",
+    "uk": {
+      "cl100k_base": {
+        "samples": 1510,
+        "tokens": 80671,
+        "tokens_per_sample": 53.4245,
+        "vocab_size": 100277,
+        "roundtrip_errors": 0
+      },
+      "o200k_base": {
+        "samples": 1510,
+        "tokens": 48718,
+        "tokens_per_sample": 32.2636,
+        "vocab_size": 200019,
+        "roundtrip_errors": 0
+      }
+    },
+    "en": {
+      "cl100k_base": {
+        "samples": 2013,
+        "tokens": 37591,
+        "tokens_per_sample": 18.6741,
+        "vocab_size": 100277,
+        "roundtrip_errors": 0
+      },
+      "o200k_base": {
+        "samples": 2013,
+        "tokens": 37136,
+        "tokens_per_sample": 18.4481,
+        "vocab_size": 200019,
+        "roundtrip_errors": 0
+      }
+    }
+  },
+  "limitations": [
+    "Tokenizer-only experiment, NOT API price/quality/latency or GPT-6 saving.",
+    "UD_Ukrainian-IU is CC BY-NC-SA 4.0; do not redistribute source texts or learned model weights.",
+    "Ukrainian and English datasets are not sentence-aligned translations.",
+    "tiktoken vocabularies differ in size; references are not controlled comparisons.",
+    "Exact sentence deduplication does not prevent paraphrase/topic leakage.",
+    "Single small corpus cannot represent all Ukrainian language use."
+  ]
+}
