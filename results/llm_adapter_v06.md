@@ -8,9 +8,9 @@ Training steps on embeddings only: 4.
 
 | Condition | Ukrainian bits/UTF-8 byte | English bits/UTF-8 byte |
 |---|---:|---:|
-| original_tokenizer | 1.9755 | 1.4373 |
-| new_vocab_unadapted | 2.5298 | 4.4402 |
-| new_vocab_after_training | 2.4847 | 4.4288 |
+| original_tokenizer | 2.0111 | 1.415 |
+| new_vocab_unadapted | 2.4566 | 4.4317 |
+| new_vocab_after_training | 2.4093 | 4.4173 |
 
 Lower bits per byte is better for language-model likelihood; this test does not evaluate task performance.
 

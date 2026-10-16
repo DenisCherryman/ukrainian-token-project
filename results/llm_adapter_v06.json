@@ -1,8 +1,9 @@
 {
   "experiment": "tiny_open_llm_embedding_transplant_engineering_only",
-  "created_at_utc": "2026-10-16T22:35:17.021931+00:00",
+  "created_at_utc": "2026-10-16T22:38:31.725418+00:00",
   "pretrained_model": "HuggingFaceTB/SmolLM2-135M",
   "model_revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+  "requested_model_revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
   "model_license": "Apache-2.0 (see model card)",
   "corpora": {
     "uk": {
@@ -31,12 +32,12 @@
   "paired_evaluation": {
     "same_sentences_all_conditions": true,
     "sha256_by_language": {
-      "uk": "80fe0a29e336b5a9feada6098567e7b3c4731b5f714899687fb6be97293ffa39",
-      "en": "6c4999c78634ab7c09b465ddf945f43c6bc10f4f3d48e1410ed7be044761ccba"
+      "uk": "88a9a3b8f375a89928a55dd4313bdd2d4cc777dd287af6a1b77b4189f3fc9d19",
+      "en": "3844c585d36da4cfccc92c6fd9b770463fecc276963f34fa18168b147c2b8f12"
     },
     "text_count": {
-      "uk": 10,
-      "en": 10
+      "uk": 30,
+      "en": 30
     }
   },
   "adapter_training_steps": 4,
@@ -45,56 +46,56 @@
   "results": {
     "original_tokenizer": {
       "uk": {
-        "bits_per_utf8_byte": 1.9755,
-        "text_tokens": 321,
-        "texts_evaluated": 10,
+        "bits_per_utf8_byte": 2.0111,
+        "text_tokens": 880,
+        "texts_evaluated": 30,
         "texts_skipped_by_length": 0,
-        "bytes": 727,
-        "forward_seconds_cpu": 1.148
+        "bytes": 1971,
+        "forward_seconds_cpu": 3.449
       },
       "en": {
-        "bits_per_utf8_byte": 1.4373,
-        "text_tokens": 122,
-        "texts_evaluated": 10,
+        "bits_per_utf8_byte": 1.415,
+        "text_tokens": 357,
+        "texts_evaluated": 30,
         "texts_skipped_by_length": 0,
-        "bytes": 555,
-        "forward_seconds_cpu": 0.865
+        "bytes": 1612,
+        "forward_seconds_cpu": 2.479
       }
     },
     "new_vocab_unadapted": {
       "uk": {
-        "bits_per_utf8_byte": 2.5298,
-        "text_tokens": 198,
-        "texts_evaluated": 10,
+        "bits_per_utf8_byte": 2.4566,
+        "text_tokens": 514,
+        "texts_evaluated": 30,
         "texts_skipped_by_length": 0,
-        "bytes": 727,
-        "forward_seconds_cpu": 0.748
+        "bytes": 1971,
+        "forward_seconds_cpu": 2.148
       },
       "en": {
-        "bits_per_utf8_byte": 4.4402,
-        "text_tokens": 284,
-        "texts_evaluated": 10,
+        "bits_per_utf8_byte": 4.4317,
+        "text_tokens": 820,
+        "texts_evaluated": 30,
         "texts_skipped_by_length": 0,
-        "bytes": 555,
-        "forward_seconds_cpu": 0.854
+        "bytes": 1612,
+        "forward_seconds_cpu": 2.587
       }
     },
     "new_vocab_after_training": {
       "uk": {
-        "bits_per_utf8_byte": 2.4847,
-        "text_tokens": 198,
-        "texts_evaluated": 10,
+        "bits_per_utf8_byte": 2.4093,
+        "text_tokens": 514,
+        "texts_evaluated": 30,
         "texts_skipped_by_length": 0,
-        "bytes": 727,
-        "forward_seconds_cpu": 0.746
+        "bytes": 1971,
+        "forward_seconds_cpu": 2.154
       },
       "en": {
-        "bits_per_utf8_byte": 4.4288,
-        "text_tokens": 284,
-        "texts_evaluated": 10,
+        "bits_per_utf8_byte": 4.4173,
+        "text_tokens": 820,
+        "texts_evaluated": 30,
         "texts_skipped_by_length": 0,
-        "bytes": 555,
-        "forward_seconds_cpu": 0.85
+        "bytes": 1612,
+        "forward_seconds_cpu": 2.569
       }
     }
   },
