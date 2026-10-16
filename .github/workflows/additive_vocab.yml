@@ -1,0 +1,54 @@
+name: v0.8 additive Ukrainian vocabulary experiment
+on:
+  push:
+    paths:
+      - '.github/workflows/additive_vocab.yml'
+      - 'additive_vocab.py'
+      - 'tests/test_additive_vocab.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: utp-additive-v08
+  cancel-in-progress: false
+jobs:
+  experiment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      TOKENIZERS_PARALLELISM: 'false'
+      OMP_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing project dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Verify tests
+        run: python -m pytest -q
+      - name: CPU libraries
+        run: |
+          python -m pip install "torch==2.6.0" --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install "transformers==4.52.4" "huggingface_hub>=0.30,<1" "safetensors>=0.4"
+      - name: Add 128 train-only Cyrillic tokens; adapt new rows through 256 steps
+        run: |
+          python additive_vocab.py --new-tokens 128 --samples 30 --seed 42 \
+            --out results/additive_v08.json > /tmp/utp_v08.log 2>&1 || {
+              tail -n 150 /tmp/utp_v08.log
+              exit 1
+            }
+      - name: Add readout to Actions summary
+        run: cat results/additive_v08.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Publish aggregate metrics (never corpus, vocabulary or model weights)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/additive_v08.json results/additive_v08.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish additive vocabulary quality and token tradeoff v0.8"
+            git pull --rebase -X theirs
+            git push
+          fi
