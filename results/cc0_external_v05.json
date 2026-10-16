@@ -1,0 +1,106 @@
+{
+  "experiment": "out_of_domain_cc0_holdout_v05",
+  "created_at_utc": "2026-10-16T22:25:31.932088+00:00",
+  "model_selection_source": "UD dev only; CC0 kept as independent test",
+  "training": "UD Ukrainian-IU / English-EWT (noncommercial research), 500K raw UTF-8 byte mixture, 32K vocab",
+  "sources": {
+    "uk": {
+      "compressed_sha256": "194ae135aafe303a2350909455b909d8e31341170e9d2b7f9a6956f0a1d4e267",
+      "parsed_rows": 393,
+      "invalid_rows": 0,
+      "removed_exact_ud_overlap": 0,
+      "removed_internal_duplicates": 0,
+      "usable_unique": 393,
+      "evaluated": 393,
+      "selected_text_sha256": "c04edcc03f331d12f021e8f464d42653f2c3bd204729dcccf64dac03523cb1ab",
+      "source_url": "https://downloads.tatoeba.org/exports/per_language/ukr/ukr_sentences_CC0.tsv.bz2",
+      "declared_license": "Tatoeba sentence CC0 1.0 export"
+    },
+    "en": {
+      "compressed_sha256": "06f2006beb90441a0891e4df865084fe812afd35b23e31f9364a5fd7809b47af",
+      "parsed_rows": 41512,
+      "invalid_rows": 0,
+      "removed_exact_ud_overlap": 0,
+      "removed_internal_duplicates": 3,
+      "usable_unique": 41509,
+      "evaluated": 2000,
+      "selected_text_sha256": "79b91e8580e3afb930a4284fbeaf24f26f5b9e61baa39ca30fc6baa736d1300c",
+      "source_url": "https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences_CC0.tsv.bz2",
+      "declared_license": "Tatoeba sentence CC0 1.0 export"
+    }
+  },
+  "rows": [
+    {
+      "seed": 42,
+      "vocab": 32768,
+      "selected_on_ud_dev": "uk75",
+      "ud_dev_english_regression_pct": 6.2299,
+      "uk_cc0": {
+        "baseline_tokens": 4282,
+        "selected_tokens": 4072,
+        "token_reduction_pct": 4.904,
+        "roundtrip_errors": 0,
+        "effective_vocab": 32768
+      },
+      "en_cc0": {
+        "baseline_tokens": 42651,
+        "selected_tokens": 45607,
+        "token_reduction_pct": -6.931,
+        "roundtrip_errors": 0,
+        "effective_vocab": 32768
+      }
+    },
+    {
+      "seed": 173,
+      "vocab": 32768,
+      "selected_on_ud_dev": "uk75",
+      "ud_dev_english_regression_pct": 5.9718,
+      "uk_cc0": {
+        "baseline_tokens": 4308,
+        "selected_tokens": 4086,
+        "token_reduction_pct": 5.153,
+        "roundtrip_errors": 0,
+        "effective_vocab": 32768
+      },
+      "en_cc0": {
+        "baseline_tokens": 42616,
+        "selected_tokens": 45392,
+        "token_reduction_pct": -6.514,
+        "roundtrip_errors": 0,
+        "effective_vocab": 32768
+      }
+    },
+    {
+      "seed": 2026,
+      "vocab": 32768,
+      "selected_on_ud_dev": "uk75",
+      "ud_dev_english_regression_pct": 5.7069,
+      "uk_cc0": {
+        "baseline_tokens": 4192,
+        "selected_tokens": 4035,
+        "token_reduction_pct": 3.745,
+        "roundtrip_errors": 0,
+        "effective_vocab": 32768
+      },
+      "en_cc0": {
+        "baseline_tokens": 42884,
+        "selected_tokens": 45662,
+        "token_reduction_pct": -6.478,
+        "roundtrip_errors": 0,
+        "effective_vocab": 32768
+      }
+    }
+  ],
+  "descriptive_seed_means": {
+    "uk": 4.601,
+    "en": -6.641
+  },
+  "limitations": [
+    "Independent new SOURCE, not independent linguistically diverse documents: sentence authorship and near-duplicate sources are unknown.",
+    "Exact UD sentence overlap excluded; paraphrase and training-history leakage cannot be ruled out.",
+    "Only explicitly CC0-labeled Tatoeba sentences evaluated. The training data are noncommercial UD and learned weights are not redistributed.",
+    "Evaluation sentence counts may be small. These seed runs reuse the same independent CC0 test and are not independent corpus replicates.",
+    "No confidence intervals: individual sentences may be clustered by author or source and independence cannot be established.",
+    "No GPT-6 token savings, model quality, or API pricing conclusion can be drawn."
+  ]
+}
