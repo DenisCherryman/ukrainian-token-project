@@ -19,9 +19,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p results
-          gh api "repos/$GITHUB_REPOSITORY/actions/workflows/cc0_external.yml/runs?per_page=5" \
-            --jq '.workflow_runs[0] | {run_id: .id, status: .status, conclusion: .conclusion, url: .html_url, run_started_at: .run_started_at, updated_at: .updated_at}' \
-            > results/cc0_ci_status.json
+          if [ "$GITHUB_EVENT_NAME" = "workflow_run" ]; then
+            RUN_ID=$(jq -r '.workflow_run.id' "$GITHUB_EVENT_PATH")
+            gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID" \
+              --jq '{run_id: .id, status: .status, conclusion: .conclusion, url: .html_url, run_started_at: .run_started_at, updated_at: .updated_at}' \
+              > results/cc0_ci_status.json
+          else
+            gh api "repos/$GITHUB_REPOSITORY/actions/workflows/cc0_external.yml/runs?per_page=5" \
+              --jq '[.workflow_runs[] | select(.status == "completed")][0] | {run_id: .id, status: .status, conclusion: .conclusion, url: .html_url, run_started_at: .run_started_at, updated_at: .updated_at}' \
+              > results/cc0_ci_status.json
+          fi
       - name: Commit status only
         run: |
           git config user.name "github-actions[bot]"
