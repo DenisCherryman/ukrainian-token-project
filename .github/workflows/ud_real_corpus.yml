@@ -1,0 +1,72 @@
+name: Real Ukrainian corpus benchmark
+on:
+  push:
+    paths:
+      - '.github/workflows/ud_real_corpus.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: real-ud-corpus-research
+  cancel-in-progress: false
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install tools
+        run: python -m pip install -r requirements.txt
+      - name: Verify public project tests
+        run: python -m pytest -q
+      - name: Download pinned upstream UD corpora for noncommercial research
+        run: |
+          python corpora.py --out data/ud_raw --accept-license \
+            --uk-ref 21f641ba6109044ce9aafd4b2cbfa20a4ac6e479 \
+            --en-ref 4a4d77f599ea53cc405f85d0cec4b2f14f81d42b
+      - name: Re-split by document to prevent train/test contamination
+        run: python prepare_ud.py --source data/ud_raw --out data/ud_strict
+      - name: Train controlled mixture sweep on train and dev only
+        run: |
+          python mixture.py \
+            --uk data/ud_strict/uk_train.txt \
+            --en data/ud_strict/en_train.txt \
+            --uk-test data/ud_strict/uk_dev.txt \
+            --en-test data/ud_strict/en_dev.txt \
+            --vocab 1024 --train-budget-bytes 500000 \
+            --ratios 25 50 75 100 --out runs/ud_development \
+            > /tmp/utp_training.log 2>&1 || { tail -n 100 /tmp/utp_training.log; exit 1; }
+      - name: Freeze the tokenizer selection using dev scores
+        run: |
+          python select_ratio.py \
+            --results runs/ud_development/results.json \
+            --baseline 50 --max-en-regression-pct 10 \
+            --out runs/ud_development/decision.json
+      - name: Evaluate untouched document-disjoint test corpora
+        run: |
+          python final_evaluation.py \
+            --decision runs/ud_development/decision.json \
+            --data data/ud_strict --out runs/ud_final --bootstrap 1000
+      - name: Measure public tiktoken encodings on the same test datasets
+        continue-on-error: true
+        run: python scripts/measure_reference.py
+      - name: Publish only aggregates and upstream SHA-256
+        run: python scripts/aggregate_ud_report.py
+      - name: Add report to Actions job summary
+        run: cat results/ud_iu_ewt_v03.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit aggregate-only metrics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ud_iu_ewt_v03.json results/ud_iu_ewt_v03.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish noncommercial UD tokenizer benchmark aggregate results"
+            git push
+          fi
