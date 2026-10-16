@@ -3,6 +3,8 @@ on:
   push:
     paths:
       - '.github/workflows/ud_multivocab.yml'
+      - 'multivocab.py'
+      - 'tests/test_multivocab.py'
   workflow_dispatch:
 permissions:
   contents: write
