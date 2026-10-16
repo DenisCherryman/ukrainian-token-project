@@ -1,0 +1,100 @@
+{
+  "experiment": "tiny_open_llm_embedding_transplant_engineering_only",
+  "created_at_utc": "2026-10-16T22:33:26.766814+00:00",
+  "pretrained_model": "HuggingFaceTB/SmolLM2-135M",
+  "model_revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+  "model_license": "Apache-2.0 (see model card)",
+  "corpora": {
+    "uk": {
+      "source_url": "https://downloads.tatoeba.org/exports/per_language/ukr/ukr_sentences_CC0.tsv.bz2",
+      "source_sha256": "194ae135aafe303a2350909455b909d8e31341170e9d2b7f9a6956f0a1d4e267",
+      "training_samples": 292,
+      "heldout_samples": 101,
+      "license": "CC0 export",
+      "split": "stable_sha256_by_sentence"
+    },
+    "en": {
+      "source_url": "https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences_CC0.tsv.bz2",
+      "source_sha256": "06f2006beb90441a0891e4df865084fe812afd35b23e31f9364a5fd7809b47af",
+      "training_samples": 1495,
+      "heldout_samples": 505,
+      "license": "CC0 export",
+      "split": "stable_sha256_by_sentence"
+    }
+  },
+  "tokenizer_training": {
+    "uk_training_bytes": 18738,
+    "en_training_bytes": 6249,
+    "vocab": 1024,
+    "training_samples": 371
+  },
+  "adapter_training_steps": 4,
+  "trainable": "input/output embeddings only",
+  "measure": "nll_bits_per_original_utf8_byte",
+  "results": {
+    "original_tokenizer": {
+      "uk": {
+        "bits_per_utf8_byte": 1.9755,
+        "text_tokens": 321,
+        "texts_evaluated": 10,
+        "texts_skipped_by_length": 0,
+        "bytes": 727,
+        "forward_seconds_cpu": 0.753
+      },
+      "en": {
+        "bits_per_utf8_byte": 1.2429,
+        "text_tokens": 240,
+        "texts_evaluated": 10,
+        "texts_skipped_by_length": 0,
+        "bytes": 1098,
+        "forward_seconds_cpu": 0.706
+      }
+    },
+    "new_vocab_unadapted": {
+      "uk": {
+        "bits_per_utf8_byte": 2.5298,
+        "text_tokens": 198,
+        "texts_evaluated": 10,
+        "texts_skipped_by_length": 0,
+        "bytes": 727,
+        "forward_seconds_cpu": 0.521
+      },
+      "en": {
+        "bits_per_utf8_byte": 4.6477,
+        "text_tokens": 193,
+        "texts_evaluated": 7,
+        "texts_skipped_by_length": 3,
+        "bytes": 368,
+        "forward_seconds_cpu": 0.419
+      }
+    },
+    "new_vocab_after_training": {
+      "uk": {
+        "bits_per_utf8_byte": 2.4847,
+        "text_tokens": 198,
+        "texts_evaluated": 10,
+        "texts_skipped_by_length": 0,
+        "bytes": 727,
+        "forward_seconds_cpu": 0.518
+      },
+      "en": {
+        "bits_per_utf8_byte": 4.6349,
+        "text_tokens": 193,
+        "texts_evaluated": 7,
+        "texts_skipped_by_length": 3,
+        "bytes": 368,
+        "forward_seconds_cpu": 0.418
+      }
+    }
+  },
+  "limitations": [
+    "Engineering integration smoke test, NOT an unbiased held-out language quality benchmark.",
+    "The same Tatoeba source was used for previous v0.5 tokenizer evaluation; results must not be promoted as new unseen evidence.",
+    "CC0 Ukrainian corpus is tiny; tokenizer trained only on split CC0 data.",
+    "Embedding transplant and a few tiny training steps cannot establish language-model quality or competitive downstream performance.",
+    "Bits per original UTF-8 byte (including EOS) is comparable across distinct tokenizers; tokens-per-token/perplexity is NOT.",
+    "Raw CPU forward time on shared GitHub runner is illustrative, not a controlled production latency measurement.",
+    "Neither the model weights nor the tokenizer are published; model licensing/privacy due diligence required.",
+    "Not GPT-6 or ChatGPT token/cost savings."
+  ]
+}
