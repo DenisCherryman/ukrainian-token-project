@@ -1,0 +1,41 @@
+name: v0.8 additive research status
+on:
+  push:
+    paths: ['.github/workflows/additive_status.yml']
+  workflow_run:
+    workflows: ['v0.8 additive Ukrainian vocabulary experiment']
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: write
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Obtain last complete run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p results
+          if [ "$GITHUB_EVENT_NAME" = "workflow_run" ]; then
+            RUN_ID=$(jq -r '.workflow_run.id' "$GITHUB_EVENT_PATH")
+            gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID" \
+              --jq '{run_id: .id, status: .status, conclusion: .conclusion, url: .html_url, started: .run_started_at, finished: .updated_at}' \
+              > results/additive_ci_status.json
+          else
+            gh api "repos/$GITHUB_REPOSITORY/actions/workflows/additive_vocab.yml/runs?per_page=10" \
+              --jq '[.workflow_runs[] | select(.status=="completed")][0] | {run_id: .id, status: .status, conclusion: .conclusion, url: .html_url, started: .run_started_at, finished: .updated_at}' \
+              > results/additive_ci_status.json
+          fi
+      - name: Publish status
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/additive_ci_status.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update v0.8 additive research run state"
+            git pull --rebase -X theirs
+            git push
+          fi
