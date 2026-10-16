@@ -10,7 +10,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install test dependencies
+      - name: Install dependencies
         run: python -m pip install -r requirements.txt
-      - name: Run paired benchmark tests
-        run: python -m pytest -q tests/test_paired_benchmark.py
+      - name: Run available tests
+        run: python -m pytest -q
