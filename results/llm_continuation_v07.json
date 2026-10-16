@@ -1,0 +1,175 @@
+{
+  "experiment": "v07_bilingual_embedding_continuation_engineering",
+  "executed_at_utc": "2026-10-16T22:49:47.597312+00:00",
+  "model": "HuggingFaceTB/SmolLM2-135M",
+  "model_revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+  "model_revision_observed": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+  "tokenizer_training": {
+    "uk_training_bytes": 18738,
+    "en_training_bytes": 6249,
+    "vocab": 1024,
+    "training_samples": 371
+  },
+  "data": {
+    "uk": {
+      "source": "https://downloads.tatoeba.org/exports/per_language/ukr/ukr_sentences_CC0.tsv.bz2",
+      "compressed_sha256": "194ae135aafe303a2350909455b909d8e31341170e9d2b7f9a6956f0a1d4e267",
+      "license": "Tatoeba CC0 sentence export",
+      "training_sentences": 292,
+      "holdout_sentences": 101
+    },
+    "en": {
+      "source": "https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences_CC0.tsv.bz2",
+      "compressed_sha256": "06f2006beb90441a0891e4df865084fe812afd35b23e31f9364a5fd7809b47af",
+      "license": "Tatoeba CC0 sentence export",
+      "training_sentences": 1495,
+      "holdout_sentences": 505
+    }
+  },
+  "paired_test": {
+    "sha256": {
+      "uk": "88a9a3b8f375a89928a55dd4313bdd2d4cc777dd287af6a1b77b4189f3fc9d19",
+      "en": "3844c585d36da4cfccc92c6fd9b770463fecc276963f34fa18168b147c2b8f12"
+    },
+    "counts": {
+      "uk": 30,
+      "en": 30
+    },
+    "selection": "same sentences under both tokenizers, selected before scoring"
+  },
+  "training": {
+    "trainable": "input/output token embeddings only",
+    "optimizer": "AdamW",
+    "learning_rate": 0.0003,
+    "selection": "fixed checkpoint schedule, no heldout-driven selection",
+    "training_step_mix": "3 Ukrainian : 1 English (examples, not bytes)",
+    "eligible_train_sentences": {
+      "uk": 291,
+      "en": 1193
+    },
+    "step_intervals": {
+      "16": {
+        "steps": 16,
+        "uk_steps": 12,
+        "en_steps": 4,
+        "mean_train_loss_per_token": 6.1334
+      },
+      "64": {
+        "steps": 48,
+        "uk_steps": 36,
+        "en_steps": 12,
+        "mean_train_loss_per_token": 5.8451
+      },
+      "128": {
+        "steps": 64,
+        "uk_steps": 48,
+        "en_steps": 16,
+        "mean_train_loss_per_token": 5.3491
+      }
+    }
+  },
+  "metrics": "negative-log2-likelihood bits per original UTF-8 byte",
+  "original": {
+    "uk": {
+      "bits_per_utf8_byte": 2.0111,
+      "text_tokens": 880,
+      "texts_evaluated": 30,
+      "texts_skipped_by_length": 0,
+      "bytes": 1971,
+      "forward_seconds_cpu": 3.218
+    },
+    "en": {
+      "bits_per_utf8_byte": 1.415,
+      "text_tokens": 357,
+      "texts_evaluated": 30,
+      "texts_skipped_by_length": 0,
+      "bytes": 1612,
+      "forward_seconds_cpu": 2.422
+    }
+  },
+  "new_tokenizer_checkpoints": {
+    "0": {
+      "uk": {
+        "bits_per_utf8_byte": 2.4566,
+        "text_tokens": 514,
+        "texts_evaluated": 30,
+        "texts_skipped_by_length": 0,
+        "bytes": 1971,
+        "forward_seconds_cpu": 2.08
+      },
+      "en": {
+        "bits_per_utf8_byte": 4.4317,
+        "text_tokens": 820,
+        "texts_evaluated": 30,
+        "texts_skipped_by_length": 0,
+        "bytes": 1612,
+        "forward_seconds_cpu": 2.493
+      }
+    },
+    "16": {
+      "uk": {
+        "bits_per_utf8_byte": 2.2891,
+        "text_tokens": 514,
+        "texts_evaluated": 30,
+        "texts_skipped_by_length": 0,
+        "bytes": 1971,
+        "forward_seconds_cpu": 2.112
+      },
+      "en": {
+        "bits_per_utf8_byte": 4.3632,
+        "text_tokens": 820,
+        "texts_evaluated": 30,
+        "texts_skipped_by_length": 0,
+        "bytes": 1612,
+        "forward_seconds_cpu": 2.484
+      }
+    },
+    "64": {
+      "uk": {
+        "bits_per_utf8_byte": 2.1819,
+        "text_tokens": 514,
+        "texts_evaluated": 30,
+        "texts_skipped_by_length": 0,
+        "bytes": 1971,
+        "forward_seconds_cpu": 2.077
+      },
+      "en": {
+        "bits_per_utf8_byte": 4.1215,
+        "text_tokens": 820,
+        "texts_evaluated": 30,
+        "texts_skipped_by_length": 0,
+        "bytes": 1612,
+        "forward_seconds_cpu": 2.483
+      }
+    },
+    "128": {
+      "uk": {
+        "bits_per_utf8_byte": 2.0663,
+        "text_tokens": 514,
+        "texts_evaluated": 30,
+        "texts_skipped_by_length": 0,
+        "bytes": 1971,
+        "forward_seconds_cpu": 2.083
+      },
+      "en": {
+        "bits_per_utf8_byte": 3.9792,
+        "text_tokens": 820,
+        "texts_evaluated": 30,
+        "texts_skipped_by_length": 0,
+        "bytes": 1612,
+        "forward_seconds_cpu": 2.482
+      }
+    }
+  },
+  "limitations": [
+    "Engineering smoke test using a small CC0 dataset; no newly independent domain or downstream task test.",
+    "The same source (Tatoeba) was used in v0.5 and v0.6 exploratory work.",
+    "Checkpoints are multiple looks at the same heldout texts, not independent confirmatory evaluations.",
+    "Only embedding tables were updated; the transformer backbone remained frozen.",
+    "The 1024-token new vocabulary differs in size from the original model tokenizer.",
+    "No licensed/restricted UD text or UD-trained model is used in this workflow.",
+    "Training corpus is too small to demonstrate model-quality recovery or generalizable improvements.",
+    "Raw forward pass time is not hardware-normalized production speed.",
+    "No ChatGPT/GPT-6 token-price or quality improvement implied."
+  ]
+}
