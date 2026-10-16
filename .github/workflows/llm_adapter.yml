@@ -37,7 +37,7 @@ jobs:
         run: |
           python llm_adapter.py \
             --model HuggingFaceTB/SmolLM2-135M \
-            --vocab 1024 --sample-uk 10 --sample-en 10 \
+            --vocab 1024 --sample-uk 30 --sample-en 30 \
             --tuning-steps 4 --out results/llm_adapter_v06.json \
             > /tmp/utp_adapter.log 2>&1 || { tail -n 130 /tmp/utp_adapter.log; exit 1; }
       - name: Post results summary
