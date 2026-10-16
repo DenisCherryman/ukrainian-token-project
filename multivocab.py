@@ -112,7 +112,7 @@ def evaluate_frozen(data: Path, decision_bundle, repeats=1000):
             rows.append(row)
             continue
         tokenizers = make_tokenizers([f"baseline:{dec['model_paths']['uk50']}",
-                                      f"candidate:{dec['model_paths'][dec['selected']}"], [])
+                                      f"candidate:{dec['model_paths'][dec['selected']]}"], [])
         datasets = [(f"{lang}_test", lang, data / f"{lang}_test.txt") for lang in ("uk", "en")]
         groupfiles = {f"{lang}_test": data / f"{lang}_test.groups.txt" for lang in ("uk", "en")}
         metrics, comparisons = evaluate(datasets, tokenizers, ("baseline", "candidate"),
