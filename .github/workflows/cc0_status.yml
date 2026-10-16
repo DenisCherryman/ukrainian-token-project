@@ -1,0 +1,34 @@
+name: CC0 v0.5 workflow status
+on:
+  push:
+    paths: ['.github/workflows/cc0_status.yml']
+  workflow_run:
+    workflows: ['Independent CC0 Ukrainian holdout (v0.5)']
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: write
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch latest CC0 workflow status
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p results
+          gh api "repos/$GITHUB_REPOSITORY/actions/workflows/cc0_external.yml/runs?per_page=5" \
+            --jq '.workflow_runs[0] | {run_id: .id, status: .status, conclusion: .conclusion, url: .html_url, run_started_at: .run_started_at, updated_at: .updated_at}' \
+            > results/cc0_ci_status.json
+      - name: Commit status only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/cc0_ci_status.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update CC0 out-of-domain research run status"
+            git pull --rebase
+            git push
+          fi
