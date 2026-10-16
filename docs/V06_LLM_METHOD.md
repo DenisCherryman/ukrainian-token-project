@@ -22,7 +22,7 @@ The rest of the transformer stays frozen. Optionally run up to four steps of emb
 
 ## Evaluation and expected outcome
 
-On identical held-out sentences, record the aggregate negative log probability **in bits per ORIGINAL UTF-8 byte**, with EOS included. This normalization is required because a conventional per-token perplexity comparison is invalid when vocabulary and segmentation differ.
+On a paired subset of 30 Ukrainian and 30 English held-out CC0 sentences, jointly filtered so **both** tokenizers fit the context window, record the aggregate negative log probability **in bits per ORIGINAL UTF-8 byte**, with EOS included. This normalization is required because a conventional per-token perplexity comparison is invalid when vocabulary and segmentation differ.
 
 Conditions:
 1. Unmodified pretrained model with its original tokenizer.
@@ -35,6 +35,6 @@ CPU timings on the shared GitHub runner are illustrative, not comparable product
 
 ## Repeat
 
-On the [v0.6 workflow](../.github/workflows/llm_adapter.yml), GitHub Actions installs CPU PyTorch/Transformers, downloads the open model and CC0 exports, executes tests and stores only aggregate JSON/Markdown under results. A failure means do not report a measured LLM result.
+The source pretrained checkpoint is pinned to commit **93efa2f097d58c2a74874c7e644dbc9b0cee75a2** for repeatability.\n\nOn the [v0.6 workflow](../.github/workflows/llm_adapter.yml), GitHub Actions installs CPU PyTorch/Transformers, downloads the open model and CC0 exports, executes tests and stores only aggregate JSON/Markdown under results. A failure means do not report a measured LLM result.
 
 The goal after this is **continued pretraining with a legal, large, high-quality corpus**, evaluations of task quality and speed under equivalent hardware, and a truly held-out Ukrainian benchmark from a new source. Tokenizer-only gains are not savings in GPT-6 or ChatGPT.
