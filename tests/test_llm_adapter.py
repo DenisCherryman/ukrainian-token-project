@@ -40,3 +40,16 @@ def test_markdown_has_distinct_quality_metric():
     assert "bits/UTF-8 byte" in result
     assert "Do not claim ChatGPT savings" in result
     assert "new_vocab_after_training" in result
+
+
+def test_paired_selection_skips_only_joint_ineligible_sentences():
+    from llm_adapter import choose_paired_texts
+    sentences = ["a", "ab", "abc", "abcd", "abcde", "abcdef"]
+    def original(t):
+        return [1] + [3] * len(t) + [2]
+    def candidate(t):
+        return [1] + [3] * (len(t) * 2) + [2]
+    chosen = choose_paired_texts(sentences, original, candidate, 2, max_text_tokens=5)
+    assert chosen == ["a", "ab"]
+    with pytest.raises(ValueError, match="Not enough paired"):
+        choose_paired_texts(sentences, original, candidate, 4, max_text_tokens=5)
