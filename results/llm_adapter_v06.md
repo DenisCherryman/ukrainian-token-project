@@ -8,9 +8,9 @@ Training steps on embeddings only: 4.
 
 | Condition | Ukrainian bits/UTF-8 byte | English bits/UTF-8 byte |
 |---|---:|---:|
-| original_tokenizer | 1.9755 | 1.2429 |
-| new_vocab_unadapted | 2.5298 | 4.6477 |
-| new_vocab_after_training | 2.4847 | 4.6349 |
+| original_tokenizer | 1.9755 | 1.4373 |
+| new_vocab_unadapted | 2.5298 | 4.4402 |
+| new_vocab_after_training | 2.4847 | 4.4288 |
 
 Lower bits per byte is better for language-model likelihood; this test does not evaluate task performance.
 
@@ -18,6 +18,7 @@ Lower bits per byte is better for language-model likelihood; this test does not 
 
 - Engineering integration smoke test, NOT an unbiased held-out language quality benchmark.
 - The same Tatoeba source was used for previous v0.5 tokenizer evaluation; results must not be promoted as new unseen evidence.
+- All baseline/candidate numbers per language are from the exact same hashed paired sentence subset.
 - CC0 Ukrainian corpus is tiny; tokenizer trained only on split CC0 data.
 - Embedding transplant and a few tiny training steps cannot establish language-model quality or competitive downstream performance.
 - Bits per original UTF-8 byte (including EOS) is comparable across distinct tokenizers; tokens-per-token/perplexity is NOT.

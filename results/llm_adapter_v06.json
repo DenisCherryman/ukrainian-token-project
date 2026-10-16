@@ -1,6 +1,6 @@
 {
   "experiment": "tiny_open_llm_embedding_transplant_engineering_only",
-  "created_at_utc": "2026-10-16T22:33:26.766814+00:00",
+  "created_at_utc": "2026-10-16T22:35:17.021931+00:00",
   "pretrained_model": "HuggingFaceTB/SmolLM2-135M",
   "model_revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
   "model_license": "Apache-2.0 (see model card)",
@@ -28,6 +28,17 @@
     "vocab": 1024,
     "training_samples": 371
   },
+  "paired_evaluation": {
+    "same_sentences_all_conditions": true,
+    "sha256_by_language": {
+      "uk": "80fe0a29e336b5a9feada6098567e7b3c4731b5f714899687fb6be97293ffa39",
+      "en": "6c4999c78634ab7c09b465ddf945f43c6bc10f4f3d48e1410ed7be044761ccba"
+    },
+    "text_count": {
+      "uk": 10,
+      "en": 10
+    }
+  },
   "adapter_training_steps": 4,
   "trainable": "input/output embeddings only",
   "measure": "nll_bits_per_original_utf8_byte",
@@ -39,15 +50,15 @@
         "texts_evaluated": 10,
         "texts_skipped_by_length": 0,
         "bytes": 727,
-        "forward_seconds_cpu": 0.753
+        "forward_seconds_cpu": 1.148
       },
       "en": {
-        "bits_per_utf8_byte": 1.2429,
-        "text_tokens": 240,
+        "bits_per_utf8_byte": 1.4373,
+        "text_tokens": 122,
         "texts_evaluated": 10,
         "texts_skipped_by_length": 0,
-        "bytes": 1098,
-        "forward_seconds_cpu": 0.706
+        "bytes": 555,
+        "forward_seconds_cpu": 0.865
       }
     },
     "new_vocab_unadapted": {
@@ -57,15 +68,15 @@
         "texts_evaluated": 10,
         "texts_skipped_by_length": 0,
         "bytes": 727,
-        "forward_seconds_cpu": 0.521
+        "forward_seconds_cpu": 0.748
       },
       "en": {
-        "bits_per_utf8_byte": 4.6477,
-        "text_tokens": 193,
-        "texts_evaluated": 7,
-        "texts_skipped_by_length": 3,
-        "bytes": 368,
-        "forward_seconds_cpu": 0.419
+        "bits_per_utf8_byte": 4.4402,
+        "text_tokens": 284,
+        "texts_evaluated": 10,
+        "texts_skipped_by_length": 0,
+        "bytes": 555,
+        "forward_seconds_cpu": 0.854
       }
     },
     "new_vocab_after_training": {
@@ -75,21 +86,22 @@
         "texts_evaluated": 10,
         "texts_skipped_by_length": 0,
         "bytes": 727,
-        "forward_seconds_cpu": 0.518
+        "forward_seconds_cpu": 0.746
       },
       "en": {
-        "bits_per_utf8_byte": 4.6349,
-        "text_tokens": 193,
-        "texts_evaluated": 7,
-        "texts_skipped_by_length": 3,
-        "bytes": 368,
-        "forward_seconds_cpu": 0.418
+        "bits_per_utf8_byte": 4.4288,
+        "text_tokens": 284,
+        "texts_evaluated": 10,
+        "texts_skipped_by_length": 0,
+        "bytes": 555,
+        "forward_seconds_cpu": 0.85
       }
     }
   },
   "limitations": [
     "Engineering integration smoke test, NOT an unbiased held-out language quality benchmark.",
     "The same Tatoeba source was used for previous v0.5 tokenizer evaluation; results must not be promoted as new unseen evidence.",
+    "All baseline/candidate numbers per language are from the exact same hashed paired sentence subset.",
     "CC0 Ukrainian corpus is tiny; tokenizer trained only on split CC0 data.",
     "Embedding transplant and a few tiny training steps cannot establish language-model quality or competitive downstream performance.",
     "Bits per original UTF-8 byte (including EOS) is comparable across distinct tokenizers; tokens-per-token/perplexity is NOT.",
