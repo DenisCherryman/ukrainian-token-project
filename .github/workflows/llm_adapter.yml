@@ -49,6 +49,8 @@ jobs:
           git add results/llm_adapter_v06.json results/llm_adapter_v06.md
           if ! git diff --cached --quiet; then
             git commit -m "Publish engineering-only LLM tokenizer transplant measurements"
-            git pull --rebase
+            # During rebase 'theirs' is the current run's generated report;
+            # prefer it if another run updated the same aggregate files.
+            git pull --rebase -X theirs
             git push
           fi
