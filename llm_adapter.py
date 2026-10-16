@@ -21,6 +21,7 @@ from external_cc0 import SOURCES, download, load_cc0, normalize
 from utp import line_bytes, select_to_budget, write_lines
 
 DEFAULT_MODEL = "HuggingFaceTB/SmolLM2-135M"
+DEFAULT_REVISION = "93efa2f097d58c2a74874c7e644dbc9b0cee75a2"
 
 
 def disjoint_cc0(texts: list[str], train_pct: int = 75) -> tuple[list[str], list[str]]:
@@ -220,8 +221,8 @@ def tune_only_embeddings(model, sp, examples, steps=4, lr=0.0003):
     return trained
 
 
-def experiment(model_id=DEFAULT_MODEL, vocab=1024, sample_uk=10, sample_en=10,
-               tuning_steps=4):
+def experiment(model_id=DEFAULT_MODEL, revision=DEFAULT_REVISION,
+               vocab=1024, sample_uk=30, sample_en=30, tuning_steps=4):
     import torch
     from transformers import AutoTokenizer, AutoModelForCausalLM
     torch.manual_seed(42)
@@ -241,7 +242,7 @@ def experiment(model_id=DEFAULT_MODEL, vocab=1024, sample_uk=10, sample_en=10,
     train_en, held_en = corpora["en"]
     output = Path("runs/llm_adapter_v06")
     sp, training = train_cc0_tokenizer(train_uk, train_en, output, vocab)
-    base_tok = AutoTokenizer.from_pretrained(model_id)
+    base_tok = AutoTokenizer.from_pretrained(model_id, revision=revision)
     # Pairwise eligibility is decided BEFORE any model forward pass, on CC0 test.
     # Using the same original bytes avoids misleading cross-tokenizer comparisons.
     heldout = {
@@ -250,7 +251,7 @@ def experiment(model_id=DEFAULT_MODEL, vocab=1024, sample_uk=10, sample_en=10,
         "en": choose_paired_texts(
             held_en, lambda t: ids_source(base_tok, t), lambda t: ids_new(sp, t), sample_en),
     }
-    base_model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.float32)
+    base_model = AutoModelForCausalLM.from_pretrained(model_id, revision=revision, torch_dtype=torch.float32)
     base_model.to("cpu").eval()
     # Base model scores only the same CC0 texts, never new weights with old IDs.
     baseline = {lang: score_sentences(base_model, texts, lambda t: ids_source(base_tok,t))
@@ -276,6 +277,7 @@ def experiment(model_id=DEFAULT_MODEL, vocab=1024, sample_uk=10, sample_en=10,
         "experiment": "tiny_open_llm_embedding_transplant_engineering_only",
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "pretrained_model": model_id, "model_revision": model_sha,
+        "requested_model_revision": revision,
         "model_license": "Apache-2.0 (see model card)",
         "corpora": metadata, "tokenizer_training": training,
         "paired_evaluation": {"same_sentences_all_conditions": True,
@@ -316,13 +318,14 @@ def markdown(report):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--model", default=DEFAULT_MODEL)
+    p.add_argument("--revision", default=DEFAULT_REVISION)
     p.add_argument("--vocab", type=int, default=1024)
-    p.add_argument("--sample-uk", type=int, default=10)
-    p.add_argument("--sample-en", type=int, default=10)
+    p.add_argument("--sample-uk", type=int, default=30)
+    p.add_argument("--sample-en", type=int, default=30)
     p.add_argument("--tuning-steps", type=int, default=4)
     p.add_argument("--out", type=Path, default=Path("results/llm_adapter_v06.json"))
     args=p.parse_args()
-    report=experiment(args.model, args.vocab, args.sample_uk, args.sample_en, args.tuning_steps)
+    report=experiment(args.model, args.revision, args.vocab, args.sample_uk, args.sample_en, args.tuning_steps)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
     args.out.with_suffix(".md").write_text(markdown(report), encoding="utf-8")
