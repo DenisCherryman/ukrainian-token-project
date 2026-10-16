@@ -218,3 +218,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# UTP: legally restricted research data and locally trained weights
+/data/
+/runs/
+*.model
+*.vocab
+*.conllu
