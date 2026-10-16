@@ -1,0 +1,29 @@
+name: Import v0.3 source archive
+on:
+  push:
+    paths:
+      - 'Ukrainian-Token-Project-v0.3.zip'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify checksums and unpack source files
+        run: python scripts/import_archive.py
+      - name: Commit verified sources
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+          if ! git diff --cached --quiet; then
+            git commit -m "Import verified UTP v0.3 source files"
+            git push
+          fi
