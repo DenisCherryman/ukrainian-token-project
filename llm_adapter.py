@@ -140,6 +140,22 @@ def ids_new(sp, text):
     return [sp.bos_id()] + sp.encode(text) + [sp.eos_id()]
 
 
+def choose_paired_texts(texts, original_encode, candidate_encode, sample_size, max_text_tokens=80):
+    """Evaluate identical, pre-filtered sentences under both tokenizers."""
+    if sample_size <= 0:
+        raise ValueError("At least one paired sample is needed")
+    selection = []
+    for text in texts:
+        if (3 <= len(original_encode(text)) <= max_text_tokens+2 and
+                3 <= len(candidate_encode(text)) <= max_text_tokens+2):
+            selection.append(text)
+            if len(selection) == sample_size:
+                break
+    if len(selection) < sample_size:
+        raise ValueError(f"Not enough paired sentences: {len(selection)}/{sample_size}")
+    return selection
+
+
 def score_sentences(model, texts, encoding, max_text_tokens=80):
     """Causal likelihood per UTF-8 byte, excluding BOS and including EOS."""
     import torch
@@ -223,17 +239,27 @@ def experiment(model_id=DEFAULT_MODEL, vocab=1024, sample_uk=10, sample_en=10,
         }
     train_uk, held_uk = corpora["uk"]
     train_en, held_en = corpora["en"]
-    # Same order for all three conditions: baseline, transplanted, adapted.
-    heldout = {"uk": held_uk[:sample_uk], "en": held_en[:sample_en]}
     output = Path("runs/llm_adapter_v06")
     sp, training = train_cc0_tokenizer(train_uk, train_en, output, vocab)
     base_tok = AutoTokenizer.from_pretrained(model_id)
+    # Pairwise eligibility is decided BEFORE any model forward pass, on CC0 test.
+    # Using the same original bytes avoids misleading cross-tokenizer comparisons.
+    heldout = {
+        "uk": choose_paired_texts(
+            held_uk, lambda t: ids_source(base_tok, t), lambda t: ids_new(sp, t), sample_uk),
+        "en": choose_paired_texts(
+            held_en, lambda t: ids_source(base_tok, t), lambda t: ids_new(sp, t), sample_en),
+    }
     base_model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.float32)
     base_model.to("cpu").eval()
     # Base model scores only the same CC0 texts, never new weights with old IDs.
     baseline = {lang: score_sentences(base_model, texts, lambda t: ids_source(base_tok,t))
                 for lang,texts in heldout.items()}
     model_sha = getattr(base_model.config, "_commit_hash", None)
+    sample_checksums = {
+        lang: hashlib.sha256("\n".join(texts).encode("utf-8")).hexdigest()
+        for lang, texts in heldout.items()
+    }
     replace_embeddings(base_model, sp, base_tok)
     transplant = {lang: score_sentences(base_model, texts, lambda t: ids_new(sp,t))
                   for lang,texts in heldout.items()}
@@ -241,12 +267,20 @@ def experiment(model_id=DEFAULT_MODEL, vocab=1024, sample_uk=10, sample_en=10,
     trained_steps = tune_only_embeddings(base_model, sp, train_uk, tuning_steps)
     adapted = {lang: score_sentences(base_model, texts, lambda t: ids_new(sp,t))
                for lang,texts in heldout.items()}
+    for lang in ("uk", "en"):
+        same_count = {part[lang]["texts_evaluated"] for part in (baseline, transplant, adapted)}
+        same_bytes = {part[lang]["bytes"] for part in (baseline, transplant, adapted)}
+        if same_count != {len(heldout[lang])} or len(same_bytes) != 1:
+            raise ValueError(f"Unpaired evaluation data detected for {lang}")
     return {
         "experiment": "tiny_open_llm_embedding_transplant_engineering_only",
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "pretrained_model": model_id, "model_revision": model_sha,
         "model_license": "Apache-2.0 (see model card)",
         "corpora": metadata, "tokenizer_training": training,
+        "paired_evaluation": {"same_sentences_all_conditions": True,
+                              "sha256_by_language": sample_checksums,
+                              "text_count": {lang: len(texts) for lang, texts in heldout.items()}},
         "adapter_training_steps": trained_steps, "trainable": "input/output embeddings only",
         "measure": "nll_bits_per_original_utf8_byte",
         "results": {"original_tokenizer": baseline, "new_vocab_unadapted": transplant,
@@ -254,6 +288,7 @@ def experiment(model_id=DEFAULT_MODEL, vocab=1024, sample_uk=10, sample_en=10,
         "limitations": [
             "Engineering integration smoke test, NOT an unbiased held-out language quality benchmark.",
             "The same Tatoeba source was used for previous v0.5 tokenizer evaluation; results must not be promoted as new unseen evidence.",
+            "All baseline/candidate numbers per language are from the exact same hashed paired sentence subset.",
             "CC0 Ukrainian corpus is tiny; tokenizer trained only on split CC0 data.",
             "Embedding transplant and a few tiny training steps cannot establish language-model quality or competitive downstream performance.",
             "Bits per original UTF-8 byte (including EOS) is comparable across distinct tokenizers; tokens-per-token/perplexity is NOT.",
