@@ -1,0 +1,1387 @@
+{
+  "status": "real_corpus_multivocab_research",
+  "generated_at_utc": "2026-10-16T22:18:24.116478+00:00",
+  "selection": "dev_only",
+  "vocabulary_comparison": "matched per candidate-baseline pair",
+  "training_limit_bytes": 500000,
+  "max_en_regression_pct_on_dev": 10.0,
+  "seeds_note": "training-subset resampling; NOT independent documents",
+  "corpus": {
+    "uk_train": {
+      "sentences": 4931,
+      "documents": 475,
+      "sha256": "7f11b5de9ee7cdd0ae2fc739268dd50c76f08635be4134c3c478b5de0ba79256"
+    },
+    "uk_dev": {
+      "sentences": 549,
+      "documents": 64,
+      "sha256": "b90362433361846bcad6bef081fed38928b9b4ac134af9b24c584e8acbf1135a"
+    },
+    "uk_test": {
+      "sentences": 1510,
+      "documents": 65,
+      "sha256": "c450c0084a1987f179915c32d899305fcb8bc6fdb90ffc6b56a6d971999a3864"
+    },
+    "en_train": {
+      "sentences": 11984,
+      "documents": 968,
+      "sha256": "9e1ea3716f5b971577502a8a6ac07fe55901ef8b99ff6142a55b42af1aa99fef"
+    },
+    "en_dev": {
+      "sentences": 1408,
+      "documents": 100,
+      "sha256": "f551351e4de16df83ea95b668455b95bb06fc95fc70c2d24e010b7cc09a9ee7c"
+    },
+    "en_test": {
+      "sentences": 2013,
+      "documents": 106,
+      "sha256": "09bcb33bb3fed05cee3ed0e59fcefd0ada885f0792d71dc2329abb189de93374"
+    }
+  },
+  "dev_decisions": [
+    {
+      "vocab": 1024,
+      "seed": 42,
+      "actual_vocab": [
+        1024,
+        1024
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 9.2422,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 26910,
+          "en_tokens": 45790,
+          "effective_vocab": 1024
+        },
+        "uk75": {
+          "uk_tokens": 24880,
+          "en_tokens": 50022,
+          "effective_vocab": 1024
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      }
+    },
+    {
+      "vocab": 1024,
+      "seed": 173,
+      "actual_vocab": [
+        1024,
+        1024
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 8.5113,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 26849,
+          "en_tokens": 46080,
+          "effective_vocab": 1024
+        },
+        "uk75": {
+          "uk_tokens": 25013,
+          "en_tokens": 50002,
+          "effective_vocab": 1024
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      }
+    },
+    {
+      "vocab": 1024,
+      "seed": 2026,
+      "actual_vocab": [
+        1024,
+        1024
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 8.9012,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 26847,
+          "en_tokens": 45859,
+          "effective_vocab": 1024
+        },
+        "uk75": {
+          "uk_tokens": 24952,
+          "en_tokens": 49941,
+          "effective_vocab": 1024
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 249999
+        },
+        "uk75": {
+          "uk_bytes": 374998,
+          "en_bytes": 125000
+        }
+      }
+    },
+    {
+      "vocab": 4096,
+      "seed": 42,
+      "actual_vocab": [
+        4096,
+        4096
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 8.2337,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 19493,
+          "en_tokens": 33035,
+          "effective_vocab": 4096
+        },
+        "uk75": {
+          "uk_tokens": 18188,
+          "en_tokens": 35755,
+          "effective_vocab": 4096
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      }
+    },
+    {
+      "vocab": 4096,
+      "seed": 173,
+      "actual_vocab": [
+        4096,
+        4096
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 8.9253,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 19597,
+          "en_tokens": 32817,
+          "effective_vocab": 4096
+        },
+        "uk75": {
+          "uk_tokens": 18197,
+          "en_tokens": 35746,
+          "effective_vocab": 4096
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      }
+    },
+    {
+      "vocab": 4096,
+      "seed": 2026,
+      "actual_vocab": [
+        4096,
+        4096
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 9.5308,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 19577,
+          "en_tokens": 32778,
+          "effective_vocab": 4096
+        },
+        "uk75": {
+          "uk_tokens": 18166,
+          "en_tokens": 35902,
+          "effective_vocab": 4096
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 249999
+        },
+        "uk75": {
+          "uk_bytes": 374998,
+          "en_bytes": 125000
+        }
+      }
+    },
+    {
+      "vocab": 8192,
+      "seed": 42,
+      "actual_vocab": [
+        8192,
+        8192
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 7.7866,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 17069,
+          "en_tokens": 29538,
+          "effective_vocab": 8192
+        },
+        "uk75": {
+          "uk_tokens": 16084,
+          "en_tokens": 31838,
+          "effective_vocab": 8192
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      }
+    },
+    {
+      "vocab": 8192,
+      "seed": 173,
+      "actual_vocab": [
+        8192,
+        8192
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 7.6991,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 17255,
+          "en_tokens": 29510,
+          "effective_vocab": 8192
+        },
+        "uk75": {
+          "uk_tokens": 16196,
+          "en_tokens": 31782,
+          "effective_vocab": 8192
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      }
+    },
+    {
+      "vocab": 8192,
+      "seed": 2026,
+      "actual_vocab": [
+        8192,
+        8192
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 7.6811,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 17139,
+          "en_tokens": 29436,
+          "effective_vocab": 8192
+        },
+        "uk75": {
+          "uk_tokens": 16105,
+          "en_tokens": 31697,
+          "effective_vocab": 8192
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 249999
+        },
+        "uk75": {
+          "uk_bytes": 374998,
+          "en_bytes": 125000
+        }
+      }
+    },
+    {
+      "vocab": 16384,
+      "seed": 42,
+      "actual_vocab": [
+        16384,
+        16384
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 6.8168,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 15447,
+          "en_tokens": 27403,
+          "effective_vocab": 16384
+        },
+        "uk75": {
+          "uk_tokens": 14702,
+          "en_tokens": 29271,
+          "effective_vocab": 16384
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      }
+    },
+    {
+      "vocab": 16384,
+      "seed": 173,
+      "actual_vocab": [
+        16384,
+        16384
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 6.8436,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 15552,
+          "en_tokens": 27310,
+          "effective_vocab": 16384
+        },
+        "uk75": {
+          "uk_tokens": 14703,
+          "en_tokens": 29179,
+          "effective_vocab": 16384
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      }
+    },
+    {
+      "vocab": 16384,
+      "seed": 2026,
+      "actual_vocab": [
+        16384,
+        16384
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 5.9109,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 15489,
+          "en_tokens": 27390,
+          "effective_vocab": 16384
+        },
+        "uk75": {
+          "uk_tokens": 14691,
+          "en_tokens": 29009,
+          "effective_vocab": 16384
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 249999
+        },
+        "uk75": {
+          "uk_bytes": 374998,
+          "en_bytes": 125000
+        }
+      }
+    },
+    {
+      "vocab": 32768,
+      "seed": 42,
+      "actual_vocab": [
+        32768,
+        32768
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 6.2299,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 14319,
+          "en_tokens": 26068,
+          "effective_vocab": 32768
+        },
+        "uk75": {
+          "uk_tokens": 13681,
+          "en_tokens": 27692,
+          "effective_vocab": 32768
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      }
+    },
+    {
+      "vocab": 32768,
+      "seed": 173,
+      "actual_vocab": [
+        32768,
+        32768
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 5.9718,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 14416,
+          "en_tokens": 26056,
+          "effective_vocab": 32768
+        },
+        "uk75": {
+          "uk_tokens": 13689,
+          "en_tokens": 27612,
+          "effective_vocab": 32768
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      }
+    },
+    {
+      "vocab": 32768,
+      "seed": 2026,
+      "actual_vocab": [
+        32768,
+        32768
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 5.7069,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 14368,
+          "en_tokens": 26091,
+          "effective_vocab": 32768
+        },
+        "uk75": {
+          "uk_tokens": 13633,
+          "en_tokens": 27580,
+          "effective_vocab": 32768
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 249999
+        },
+        "uk75": {
+          "uk_bytes": 374998,
+          "en_bytes": 125000
+        }
+      }
+    }
+  ],
+  "heldout": [
+    {
+      "vocab": 1024,
+      "seed": 42,
+      "actual_vocab": [
+        1024,
+        1024
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 9.2422,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 26910,
+          "en_tokens": 45790,
+          "effective_vocab": 1024
+        },
+        "uk75": {
+          "uk_tokens": 24880,
+          "en_tokens": 50022,
+          "effective_vocab": 1024
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 74194,
+          "selected_tokens": 68420,
+          "reduction_pct": 7.782,
+          "ci_95pct": [
+            7.576,
+            8.261
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 76832,
+          "selected_tokens": 84102,
+          "reduction_pct": -9.462,
+          "ci_95pct": [
+            -9.932,
+            -9.032
+          ],
+          "document_groups": 106
+        }
+      }
+    },
+    {
+      "vocab": 1024,
+      "seed": 173,
+      "actual_vocab": [
+        1024,
+        1024
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 8.5113,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 26849,
+          "en_tokens": 46080,
+          "effective_vocab": 1024
+        },
+        "uk75": {
+          "uk_tokens": 25013,
+          "en_tokens": 50002,
+          "effective_vocab": 1024
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 73747,
+          "selected_tokens": 68805,
+          "reduction_pct": 6.701,
+          "ci_95pct": [
+            6.521,
+            7.184
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 77393,
+          "selected_tokens": 83764,
+          "reduction_pct": -8.232,
+          "ci_95pct": [
+            -8.602,
+            -7.941
+          ],
+          "document_groups": 106
+        }
+      }
+    },
+    {
+      "vocab": 1024,
+      "seed": 2026,
+      "actual_vocab": [
+        1024,
+        1024
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 8.9012,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 26847,
+          "en_tokens": 45859,
+          "effective_vocab": 1024
+        },
+        "uk75": {
+          "uk_tokens": 24952,
+          "en_tokens": 49941,
+          "effective_vocab": 1024
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 249999
+        },
+        "uk75": {
+          "uk_bytes": 374998,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 74137,
+          "selected_tokens": 68755,
+          "reduction_pct": 7.26,
+          "ci_95pct": [
+            7.073,
+            7.616
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 77187,
+          "selected_tokens": 83688,
+          "reduction_pct": -8.422,
+          "ci_95pct": [
+            -8.945,
+            -7.983
+          ],
+          "document_groups": 106
+        }
+      }
+    },
+    {
+      "vocab": 4096,
+      "seed": 42,
+      "actual_vocab": [
+        4096,
+        4096
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 8.2337,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 19493,
+          "en_tokens": 33035,
+          "effective_vocab": 4096
+        },
+        "uk75": {
+          "uk_tokens": 18188,
+          "en_tokens": 35755,
+          "effective_vocab": 4096
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 54200,
+          "selected_tokens": 50532,
+          "reduction_pct": 6.768,
+          "ci_95pct": [
+            6.536,
+            7.427
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 55366,
+          "selected_tokens": 60030,
+          "reduction_pct": -8.424,
+          "ci_95pct": [
+            -8.926,
+            -7.922
+          ],
+          "document_groups": 106
+        }
+      }
+    },
+    {
+      "vocab": 4096,
+      "seed": 173,
+      "actual_vocab": [
+        4096,
+        4096
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 8.9253,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 19597,
+          "en_tokens": 32817,
+          "effective_vocab": 4096
+        },
+        "uk75": {
+          "uk_tokens": 18197,
+          "en_tokens": 35746,
+          "effective_vocab": 4096
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 54189,
+          "selected_tokens": 50510,
+          "reduction_pct": 6.789,
+          "ci_95pct": [
+            6.567,
+            7.478
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 55182,
+          "selected_tokens": 60313,
+          "reduction_pct": -9.298,
+          "ci_95pct": [
+            -9.709,
+            -8.789
+          ],
+          "document_groups": 106
+        }
+      }
+    },
+    {
+      "vocab": 4096,
+      "seed": 2026,
+      "actual_vocab": [
+        4096,
+        4096
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 9.5308,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 19577,
+          "en_tokens": 32778,
+          "effective_vocab": 4096
+        },
+        "uk75": {
+          "uk_tokens": 18166,
+          "en_tokens": 35902,
+          "effective_vocab": 4096
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 249999
+        },
+        "uk75": {
+          "uk_bytes": 374998,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 54090,
+          "selected_tokens": 50283,
+          "reduction_pct": 7.038,
+          "ci_95pct": [
+            6.761,
+            7.978
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 54913,
+          "selected_tokens": 60199,
+          "reduction_pct": -9.626,
+          "ci_95pct": [
+            -10.185,
+            -8.826
+          ],
+          "document_groups": 106
+        }
+      }
+    },
+    {
+      "vocab": 8192,
+      "seed": 42,
+      "actual_vocab": [
+        8192,
+        8192
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 7.7866,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 17069,
+          "en_tokens": 29538,
+          "effective_vocab": 8192
+        },
+        "uk75": {
+          "uk_tokens": 16084,
+          "en_tokens": 31838,
+          "effective_vocab": 8192
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 47994,
+          "selected_tokens": 45072,
+          "reduction_pct": 6.088,
+          "ci_95pct": [
+            5.852,
+            6.748
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 49388,
+          "selected_tokens": 53337,
+          "reduction_pct": -7.996,
+          "ci_95pct": [
+            -8.542,
+            -7.238
+          ],
+          "document_groups": 106
+        }
+      }
+    },
+    {
+      "vocab": 8192,
+      "seed": 173,
+      "actual_vocab": [
+        8192,
+        8192
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 7.6991,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 17255,
+          "en_tokens": 29510,
+          "effective_vocab": 8192
+        },
+        "uk75": {
+          "uk_tokens": 16196,
+          "en_tokens": 31782,
+          "effective_vocab": 8192
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 48022,
+          "selected_tokens": 44991,
+          "reduction_pct": 6.312,
+          "ci_95pct": [
+            5.999,
+            7.05
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 49434,
+          "selected_tokens": 53461,
+          "reduction_pct": -8.146,
+          "ci_95pct": [
+            -8.577,
+            -7.565
+          ],
+          "document_groups": 106
+        }
+      }
+    },
+    {
+      "vocab": 8192,
+      "seed": 2026,
+      "actual_vocab": [
+        8192,
+        8192
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 7.6811,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 17139,
+          "en_tokens": 29436,
+          "effective_vocab": 8192
+        },
+        "uk75": {
+          "uk_tokens": 16105,
+          "en_tokens": 31697,
+          "effective_vocab": 8192
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 249999
+        },
+        "uk75": {
+          "uk_bytes": 374998,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 47657,
+          "selected_tokens": 44942,
+          "reduction_pct": 5.697,
+          "ci_95pct": [
+            5.438,
+            6.631
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 49354,
+          "selected_tokens": 53125,
+          "reduction_pct": -7.641,
+          "ci_95pct": [
+            -8.145,
+            -6.789
+          ],
+          "document_groups": 106
+        }
+      }
+    },
+    {
+      "vocab": 16384,
+      "seed": 42,
+      "actual_vocab": [
+        16384,
+        16384
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 6.8168,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 15447,
+          "en_tokens": 27403,
+          "effective_vocab": 16384
+        },
+        "uk75": {
+          "uk_tokens": 14702,
+          "en_tokens": 29271,
+          "effective_vocab": 16384
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 43527,
+          "selected_tokens": 41438,
+          "reduction_pct": 4.799,
+          "ci_95pct": [
+            4.36,
+            5.018
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 45546,
+          "selected_tokens": 49054,
+          "reduction_pct": -7.702,
+          "ci_95pct": [
+            -8.352,
+            -6.737
+          ],
+          "document_groups": 106
+        }
+      }
+    },
+    {
+      "vocab": 16384,
+      "seed": 173,
+      "actual_vocab": [
+        16384,
+        16384
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 6.8436,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 15552,
+          "en_tokens": 27310,
+          "effective_vocab": 16384
+        },
+        "uk75": {
+          "uk_tokens": 14703,
+          "en_tokens": 29179,
+          "effective_vocab": 16384
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 43606,
+          "selected_tokens": 41492,
+          "reduction_pct": 4.848,
+          "ci_95pct": [
+            4.627,
+            5.611
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 45678,
+          "selected_tokens": 49034,
+          "reduction_pct": -7.347,
+          "ci_95pct": [
+            -8.032,
+            -6.501
+          ],
+          "document_groups": 106
+        }
+      }
+    },
+    {
+      "vocab": 16384,
+      "seed": 2026,
+      "actual_vocab": [
+        16384,
+        16384
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 5.9109,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 15489,
+          "en_tokens": 27390,
+          "effective_vocab": 16384
+        },
+        "uk75": {
+          "uk_tokens": 14691,
+          "en_tokens": 29009,
+          "effective_vocab": 16384
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 249999
+        },
+        "uk75": {
+          "uk_bytes": 374998,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 43397,
+          "selected_tokens": 41225,
+          "reduction_pct": 5.005,
+          "ci_95pct": [
+            4.81,
+            5.626
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 45780,
+          "selected_tokens": 48612,
+          "reduction_pct": -6.186,
+          "ci_95pct": [
+            -6.775,
+            -5.345
+          ],
+          "document_groups": 106
+        }
+      }
+    },
+    {
+      "vocab": 32768,
+      "seed": 42,
+      "actual_vocab": [
+        32768,
+        32768
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 6.2299,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 14319,
+          "en_tokens": 26068,
+          "effective_vocab": 32768
+        },
+        "uk75": {
+          "uk_tokens": 13681,
+          "en_tokens": 27692,
+          "effective_vocab": 32768
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 40532,
+          "selected_tokens": 38629,
+          "reduction_pct": 4.695,
+          "ci_95pct": [
+            3.944,
+            4.917
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 43075,
+          "selected_tokens": 46350,
+          "reduction_pct": -7.603,
+          "ci_95pct": [
+            -8.87,
+            -6.301
+          ],
+          "document_groups": 106
+        }
+      }
+    },
+    {
+      "vocab": 32768,
+      "seed": 173,
+      "actual_vocab": [
+        32768,
+        32768
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 5.9718,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 14416,
+          "en_tokens": 26056,
+          "effective_vocab": 32768
+        },
+        "uk75": {
+          "uk_tokens": 13689,
+          "en_tokens": 27612,
+          "effective_vocab": 32768
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 250000
+        },
+        "uk75": {
+          "uk_bytes": 374999,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 40630,
+          "selected_tokens": 38725,
+          "reduction_pct": 4.689,
+          "ci_95pct": [
+            4.49,
+            5.192
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 43304,
+          "selected_tokens": 46154,
+          "reduction_pct": -6.581,
+          "ci_95pct": [
+            -7.588,
+            -5.467
+          ],
+          "document_groups": 106
+        }
+      }
+    },
+    {
+      "vocab": 32768,
+      "seed": 2026,
+      "actual_vocab": [
+        32768,
+        32768
+      ],
+      "matched_vocab": true,
+      "selected": "uk75",
+      "dev_english_regression_pct": 5.7069,
+      "dev": {
+        "uk50": {
+          "uk_tokens": 14368,
+          "en_tokens": 26091,
+          "effective_vocab": 32768
+        },
+        "uk75": {
+          "uk_tokens": 13633,
+          "en_tokens": 27580,
+          "effective_vocab": 32768
+        }
+      },
+      "observed_bytes": {
+        "uk50": {
+          "uk_bytes": 250000,
+          "en_bytes": 249999
+        },
+        "uk75": {
+          "uk_bytes": 374998,
+          "en_bytes": 125000
+        }
+      },
+      "status": "evaluated",
+      "test": {
+        "uk": {
+          "baseline_tokens": 40386,
+          "selected_tokens": 38441,
+          "reduction_pct": 4.816,
+          "ci_95pct": [
+            4.561,
+            5.232
+          ],
+          "document_groups": 65
+        },
+        "en": {
+          "baseline_tokens": 43459,
+          "selected_tokens": 46063,
+          "reduction_pct": -5.992,
+          "ci_95pct": [
+            -6.581,
+            -5.107
+          ],
+          "document_groups": 106
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Noncommercial dataset; source text and model artifacts not released.",
+    "This is NOT ChatGPT or GPT-6 token, cost, speed or quality improvement.",
+    "Seeds resample the same documents; their outcomes are NOT independent corpus replications.",
+    "Test documents are shared across all configurations. Bootstrap CI does not account for domain shift.",
+    "If a requested vocabulary size cannot be reached by BOTH models, mark it skipped."
+  ]
+}
