@@ -1,0 +1,41 @@
+name: Track v0.4 benchmark status
+on:
+  push:
+    paths: ['.github/workflows/v04_status.yml']
+  workflow_run:
+    workflows: ['Scale Ukrainian tokenizers across vocabularies and seeds']
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: write
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read latest v0.4 run from GitHub Actions API
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p results
+          gh api "repos/$GITHUB_REPOSITORY/actions/workflows/ud_multivocab.yml/runs?per_page=5" \
+            --jq '.workflow_runs[0] | {run_id: .id, status: .status, conclusion: .conclusion, url: .html_url, run_started_at: .run_started_at, updated_at: .updated_at}' \
+            > results/multivocab_ci_status.json
+          {
+            echo "# v0.4 workflow status"
+            echo
+            echo "This is the GitHub Actions run state, not the benchmark result."
+            echo
+            cat results/multivocab_ci_status.json
+          } > results/multivocab_ci_status.md
+      - name: Publish status metadata
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/multivocab_ci_status.json results/multivocab_ci_status.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Update public v0.4 GitHub Actions status"
+            git pull --rebase
+            git push
+          fi
