@@ -1,0 +1,3 @@
+# UTP v0.9 — preregistered external evaluation
+
+Goal: evaluate the frozen v0.8 additive tokenizer on Ukrainian and English encyclopedia articles as a genuinely different text genre. Do not train on, select tokens from, or tune against the external holdout. Preserve original token IDs. Collect source page titles, revision IDs and CC BY-SA 4.0 attribution, but do not commit the article text. Compare identical UTF-8 text before and after adaptation, and report both token counts and bits per original UTF-8 byte. Reject partial or unpaired samples and disclose the possibility that a pretrained model has seen Wikipedia during pretraining. Repeat with three fixed training seeds before any generalization claim.
